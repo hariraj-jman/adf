@@ -1,0 +1,17 @@
+{
+	"name": "DF_output",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "updated_quantity"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

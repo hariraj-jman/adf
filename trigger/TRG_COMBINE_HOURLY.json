@@ -1,0 +1,24 @@
+{
+	"name": "TRG_COMBINE_HOURLY",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_consolidate",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 60,
+				"startTime": "2024-08-26T11:43:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

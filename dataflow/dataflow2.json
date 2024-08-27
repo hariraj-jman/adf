@@ -1,0 +1,57 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlOrders",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddPricePerQuantity",
+					"description": "Creates an explicit mapping for each drifted column"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(OrderID = toString(byName('OrderID')),",
+				"          ProductID = toString(byName('ProductID')),",
+				"          ProductName = toString(byName('ProductName')),",
+				"          Quantity = toString(byName('Quantity')),",
+				"          OrderTimestamp = toString(byName('OrderTimestamp')),",
+				"          Price = toString(byName('Price')),",
+				"          CustomerID = toString(byName('CustomerID')),",
+				"          PricePerQuantity = toFloat(byName('Price')) / toFloat(byName('Quantity'))) ~> AddPricePerQuantity",
+				"AddPricePerQuantity derive(Quantity = toFloat(byName('Quantity'))+1) ~> derivedColumn1",
+				"derivedColumn1 derive(newPrice = toFloat(byName('PricePerQuantity'))*toFloat(byName('Quantity'))) ~> derivedColumn2",
+				"derivedColumn2 sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> sink1"
+			]
+		}
+	}
+}

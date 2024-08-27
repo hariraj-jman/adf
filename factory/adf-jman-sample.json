@@ -1,0 +1,9 @@
+{
+	"name": "adf-jman-sample",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8ff348d8-8942-4926-9101-9123b7d796e2",
+		"tenantId": "2800c0a0-70e9-49be-8733-faeaa6aced99"
+	}
+}
